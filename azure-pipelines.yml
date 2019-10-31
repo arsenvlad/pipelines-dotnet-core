@@ -45,3 +45,5 @@ steps:
     slotName: 'production'
     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
+
+    
