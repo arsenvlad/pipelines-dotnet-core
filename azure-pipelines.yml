@@ -28,3 +28,20 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'smich-charlhe-arsenv-internal(c9c8ae57-acdb-48a9-99f8-d57704f18dee)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az group list'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'smich-charlhe-arsenv-internal(c9c8ae57-acdb-48a9-99f8-d57704f18dee)'
+    appType: 'webApp'
+    appName: 'avwebapp1'
+    deployToSlotOrASE: true
+    resourceGroupName: 'avwebapp1'
+    slotName: 'production'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
