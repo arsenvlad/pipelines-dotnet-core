@@ -13,9 +13,18 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - task: UseDotNet@2
   inputs:
     version: '2.2.x'
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --ouput $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
